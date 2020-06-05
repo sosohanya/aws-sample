@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lotto Generator</title>
+</head>
+
+<body>
+<div><input type="button" id="id_button_generate" value="Generate Lotto"></div>
+<div id="id_div_lotto_table">
+</div>
+</body>
+
+<script language="javascript">
+    const g_max_num = 45;
+    const g_max_num_count_per_buy = 6;
+
+    var g_nums = new Array();
+    for (let i = 0; i < 45; i++) {
+        g_nums.push(i + 1);
+    }
+
+    let button_generate = document.getElementById("id_button_generate");
+    button_generate.addEventListener("click", function (event) {
+        generateLotto();
+    });
+
+    function generateLotto() {
+        // mix
+        for (let i = 0; i < g_nums.length; i++) {
+            let index = parseInt(Math.random() * g_max_num);
+            let temp = g_nums[i];
+            g_nums[i] = g_nums[index];
+            g_nums[index] = temp;
+        }
+
+        // show
+        let result = "";
+        for (let i = 0; i < 7; i++) {
+            let startIndex = i * g_max_num_count_per_buy;
+            let endIndex = startIndex + g_max_num_count_per_buy;
+            for (let jj = startIndex; jj < endIndex; jj++) {
+                result += g_nums[jj] + ", ";
+            }
+            result += "\n";
+        }
+        var numTable = document.getElementById("id_div_lotto_table");
+        numTable.innerText = result;
+    }
+
+    generateLotto();
+</script>
+
+</html>
